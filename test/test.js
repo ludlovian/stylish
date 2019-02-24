@@ -29,16 +29,21 @@ test.serial('complex rules', t => {
 
   const c = stylish`
     .top { margin: 10; }
-    p:self {
+    >.bottom { margin: 13; }
+    p.:self {
       padding-left: 15;
       padding-right: 12;
     }
     :root {
       --var1: #123456;
     }
+    @keyframes :self {
+      from { color: red; }
+      to { color: blue; }
+    }
   `
   const rules = stylish.context.rules.slice()
   t.snapshot(c)
-  t.is(rules.length, prevRules.length + 3)
-  t.snapshot(rules.slice(-3))
+  t.is(rules.length, prevRules.length + 5)
+  t.snapshot(rules.slice(-5))
 })

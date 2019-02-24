@@ -55,22 +55,50 @@ function insertRule (rule) {
   }
 }
 
-function buildRules (style, usi) {
-  style = style
-    .replace(/\s*([,>+~;:}{]{1})\s*/gm, '$1')
-    .trim()
-    .replace(/;}/g, '}')
-  const reSplit = /(.+?})/g
+function parseRules (s) {
+  const r = /([^{}]*([{}]))/gm
+  let n = 0
   const rules = []
+  let selector
+  let rule
   while (true) {
-    const match = reSplit.exec(style)
+    const match = r.exec(s)
     if (!match) break
-    let rule = match[1]
-    if (!/^(:root|@)/.test(rule)) {
-      if (!/:self/.test(rule)) rule = ':self ' + rule
+    if (match[2] === '{') {
+      if (n++ === 0) {
+        selector = match[1].slice(0, -1)
+        rule = '{'
+      } else {
+        rule = rule + match[1]
+      }
+    } else {
+      rule = rule + match[1]
+      if (--n === 0) {
+        rules.push({ selector, rule })
+      }
     }
-    rule = rule.replace(/:self/g, '.' + usi)
-    rules.push(rule)
   }
   return rules
+}
+
+function trimRule (rule) {
+  return rule.replace(/\s*([,>+~;:}{]{1})\s*/gm, '$1').replace(/;}/g, '}')
+}
+
+function buildRules (style, usi) {
+  return parseRules(style).map(({ selector, rule }) => {
+    selector = selector.trim()
+    if (!/^(:root|@)/.test(selector)) {
+      if (!/:self/.test(selector)) {
+        if (/^[+~>]/.test(selector)) {
+          selector = '.:self' + selector
+        } else {
+          selector = '.:self ' + selector
+        }
+      }
+    }
+    selector = selector.replace(/:self/g, usi)
+    rule = trimRule(rule)
+    return selector + rule
+  })
 }
