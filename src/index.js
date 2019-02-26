@@ -2,7 +2,7 @@
 
 const hash = string =>
   Array.from(string).reduce(
-    (h, ch) => ((h << 5) - h + ch.charCodeAt(0)) & 0xffff,
+    (h, ch) => ((h << 5) - h + ch.charCodeAt(0)) & 0xffffffff,
     0
   )
 
