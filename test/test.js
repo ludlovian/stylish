@@ -6,7 +6,7 @@ import stylish from '../src'
 test.serial('simple rule', t => {
   const prevRules = stylish.context.rules.slice()
 
-  const c = stylish(`h1 { color: red }`)
+  const c = stylish('h1 { color: red }')
   const rules = stylish.context.rules.slice()
 
   t.snapshot(c)
@@ -17,7 +17,7 @@ test.serial('simple rule', t => {
 test.serial('simple rule repeated', t => {
   const prevRules = stylish.context.rules.slice()
 
-  const c = stylish(`h1 { color: red }`)
+  const c = stylish('h1 { color: red }')
   const rules = stylish.context.rules.slice()
 
   t.snapshot(c)
