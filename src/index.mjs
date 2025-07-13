@@ -44,18 +44,18 @@ class Stylish {
   }
 
   #createId (style, rnd = 0, iteration = 0) {
-    const MAX32 = 0xffffffff
+    const MAX31 = 0x7fffffff
     /* c8 ignore start */
     if (iteration > 10) throw new Error('Infinite Loop!')
     /* c8 ignore stop */
     const h = Array.from(style).reduce(
-      (h, ch) => ((h << 5) - h + ch.charCodeAt(0)) & MAX32,
-      rnd & MAX32
+      (h, ch) => ((h << 5) - h + ch.charCodeAt(0)) & MAX31,
+      rnd & MAX31
     )
-    const id = `stylish-${h}`
+    const id = `stylish-${h.toString(36)}`
     /* c8 ignore start */
     if (this.#classes.has(id)) {
-      const rnd = (Math.random() * MAX32) & MAX32
+      const rnd = (Math.random() * MAX31) & MAX31
       return this.#createId(style, rnd, iteration + 1)
     }
     /* c8 ignore stop */
