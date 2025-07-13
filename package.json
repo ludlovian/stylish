@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Simple CSS-in-JS library",
   "type": "module",
-  "exports": "src/index.mjs",
+  "exports": "./src/index.mjs",
   "scripts": {
     "clean": "rm -rf coverage/ node_modules/.cache/",
     "lint": "standard '{src,bin,test}/**/*.mjs'|snazzy",
