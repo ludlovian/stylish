@@ -1,0 +1,23 @@
+{
+  "name": "@ludlovian/stylish",
+  "version": "0.0.1",
+  "description": "Simple CSS-in-JS library",
+  "type": "module",
+  "exports": "src/index.mjs",
+  "scripts": {
+    "clean": "rm -rf coverage/ node_modules/.cache/",
+    "lint": "standard '{src,bin,test}/**/*.mjs'|snazzy",
+    "format": "prettier-standard '{src,bin,test}/**/*.mjs'",
+    "test": "c8 node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ludlovian/stylish.git"
+  },
+  "author": "Alan Layng",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/ludlovian/stylish/issues"
+  },
+  "homepage": "https://github.com/ludlovian/stylish#readme"
+}
