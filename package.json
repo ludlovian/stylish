@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/ludlovian/stylish/issues"
   },
-  "homepage": "https://github.com/ludlovian/stylish#readme"
+  "homepage": "https://github.com/ludlovian/stylish#readme",
+  "dependencies": {
+    "@ludlovian/stringhash": "github:ludlovian/stringhash"
+  }
 }

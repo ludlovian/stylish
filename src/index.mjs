@@ -1,6 +1,8 @@
+import StringHash from '@ludlovian/stringhash'
+
 class Stylish {
   #rules = []
-  #cache = new Map()
+  #cache = new StringHash()
   #classes = new Set()
   #stylesheet
 
@@ -35,32 +37,17 @@ class Stylish {
     /* c8 ignore stop */
   }
 
-  #buildStyle (style) {
-    const id = this.#createId(style)
-    for (const rule of this.#buildRules(style, id)) {
-      this.#insertRule(rule)
-    }
-    return id
+  #getTokenClass (tok) {
+    return `stylish-${tok.toString(36)}`
   }
 
-  #createId (style, rnd = 0, iteration = 0) {
-    const MAX31 = 0x7fffffff
-    /* c8 ignore start */
-    if (iteration > 10) throw new Error('Infinite Loop!')
-    /* c8 ignore stop */
-    const h = Array.from(style).reduce(
-      (h, ch) => ((h << 5) - h + ch.charCodeAt(0)) & MAX31,
-      rnd & MAX31
-    )
-    const id = `stylish-${h.toString(36)}`
-    /* c8 ignore start */
-    if (this.#classes.has(id)) {
-      const rnd = (Math.random() * MAX31) & MAX31
-      return this.#createId(style, rnd, iteration + 1)
+  #buildStyle (style) {
+    const tok = this.#cache.store(style)
+    const cls = this.#getTokenClass(tok)
+    for (const rule of this.#buildRules(style, cls)) {
+      this.#insertRule(rule)
     }
-    /* c8 ignore stop */
-    this.#classes.add(id)
-    return id
+    return cls
   }
 
   #insertRule (rule) {
@@ -69,7 +56,7 @@ class Stylish {
     sheet.insertRule(rule, sheet.cssRules.length)
   }
 
-  #buildRules (style, id) {
+  #buildRules (style, cls) {
     const ret = []
     for (const item of this.#parseRules(style)) {
       let [selector, rule] = item
@@ -85,7 +72,7 @@ class Stylish {
         }
       }
       // replace all :self
-      selector = selector.replaceAll(':self', id)
+      selector = selector.replaceAll(':self', cls)
       rule = this.#trimRule(rule)
       ret.push(`${selector}${rule}`)
     }
@@ -104,12 +91,10 @@ class Stylish {
 
   getClass (style) {
     if (Array.isArray(style)) style = style[0]
-    let cls = this.#cache.get(style)
-    if (cls) return cls
-
-    cls = this.#buildStyle(style)
-    this.#cache.set(style, cls)
-    return cls
+    if (!this.#cache.has(style)) {
+      return this.#buildStyle(style)
+    }
+    return this.#getTokenClass(this.#cache.store(style))
   }
 
   #parseRules (style) {
