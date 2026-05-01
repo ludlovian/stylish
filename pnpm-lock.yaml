@@ -9,15 +9,5 @@ importers:
   .:
     dependencies:
       '@ludlovian/stringhash':
-        specifier: github:ludlovian/stringhash
-        version: https://codeload.github.com/ludlovian/stringhash/tar.gz/4bd7a61a7c8777378af2a3ff01216cf8adf7c59d
-
-packages:
-
-  '@ludlovian/stringhash@https://codeload.github.com/ludlovian/stringhash/tar.gz/4bd7a61a7c8777378af2a3ff01216cf8adf7c59d':
-    resolution: {tarball: https://codeload.github.com/ludlovian/stringhash/tar.gz/4bd7a61a7c8777378af2a3ff01216cf8adf7c59d}
-    version: 0.1.1
-
-snapshots:
-
-  '@ludlovian/stringhash@https://codeload.github.com/ludlovian/stringhash/tar.gz/4bd7a61a7c8777378af2a3ff01216cf8adf7c59d': {}
+        specifier: link:../stringhash
+        version: link:../stringhash

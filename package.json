@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/ludlovian/stylish#readme",
   "dependencies": {
-    "@ludlovian/stringhash": "github:ludlovian/stringhash"
+    "@ludlovian/stringhash": "link:../stringhash"
   }
 }
