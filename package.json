@@ -1,6 +1,6 @@
 {
   "name": "@ludlovian/stylish",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple CSS-in-JS library",
   "type": "module",
   "exports": "./src/index.mjs",
